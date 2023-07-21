@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.example.libraryjava.repository.BookRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookService implements IBookService {
@@ -35,10 +36,8 @@ public class BookService implements IBookService {
 
     @Override
     public void deleteBook(long id) {
-        if (id > 0) {
-            Book book = bookRepository.getReferenceById(id);
-            bookRepository.delete(book);
-        }
+        Book book = bookRepository.getReferenceById(id);
+        bookRepository.delete(book);
     }
 
     @Override
@@ -48,6 +47,7 @@ public class BookService implements IBookService {
 
     @Override
     public Book getOneBook(long id) {
-        return bookRepository.getReferenceById(id);
+        Optional<Book> bookOptional = bookRepository.findById(id);
+        return bookOptional.orElse(null);
     }
 }
