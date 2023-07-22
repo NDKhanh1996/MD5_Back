@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/book")
 @CrossOrigin
 public class BookController {
     private final BookService bookService;
@@ -30,7 +30,7 @@ public class BookController {
         return new ResponseEntity<>(responseObject, HttpStatus.OK);
     }
 
-    @PostMapping("/addBook")
+    @PostMapping("/add")
     public ResponseEntity<Object> addBook(@RequestBody Book book) { //need try
         bookService.addBook(book);
         Object responseObject = new Object() {

@@ -3,8 +3,8 @@ package com.example.libraryjava.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "user")
-public class User {
+@Table(name = "account")
+public class Account {
     @Id
     @GeneratedValue
     private long id;
@@ -15,10 +15,10 @@ public class User {
     @Column(name = "adminRole")
     private Boolean adminRole;
 
-    public User() {
+    public Account() {
     }
 
-    public User(String name, String password, Boolean adminRole) {
+    public Account(String name, String password, Boolean adminRole) {
         this.name = name;
         this.password = password;
         this.adminRole = adminRole;
