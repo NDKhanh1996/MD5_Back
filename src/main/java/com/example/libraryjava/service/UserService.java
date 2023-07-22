@@ -8,9 +8,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService implements Iuser{
+public class UserService implements Iuser {
     private final UserRepository userRepository;
-    public UserService (UserRepository userRepository){
+
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -27,7 +28,7 @@ public class UserService implements Iuser{
 
     @Override
     public void updateUser(long id, User user) {
-        if (user != null){
+        if (user != null) {
             User newUser = userRepository.getReferenceById(id);
             newUser.setName(user.getName());
             newUser.setPassword(user.getPassword());
