@@ -37,8 +37,19 @@ public class AccountService implements IAccount {
     }
 
     @Override
-    public Account getOneAccount(long id) {
+    public Account getAccountById(long id) {
         Optional<Account> accountOptional = accountRepository.findById(id);
         return accountOptional.orElse(null);
+    }
+
+    @Override
+    public Account getAccountByName(String name) {
+        return accountRepository.findByName(name);
+    }
+
+    @Override
+    public Account login(String email, String password) {
+        Account account = accountRepository.findByName(email);
+        return (account != null && password.equals(account.getPassword())) ? account : null;
     }
 }

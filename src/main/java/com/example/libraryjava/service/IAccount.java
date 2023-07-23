@@ -11,5 +11,9 @@ public interface IAccount {
 
     public void updateAccount(long id, Account account);
 
-    public Account getOneAccount(long id);
+    public Account getAccountById(long id);
+
+    public Account getAccountByName(String name);
+
+    Account login(String email, String password);
 }
