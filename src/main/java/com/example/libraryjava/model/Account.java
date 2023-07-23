@@ -12,16 +12,16 @@ public class Account {
     private String name;
     @Column(name = "password")
     private String password;
-    @Column(name = "adminRole")
-    private Boolean adminRole;
+    @Column(name = "role")
+    private String role;
 
     public Account() {
     }
 
-    public Account(String name, String password, Boolean adminRole) {
+    public Account(String name, String password, String role) {
         this.name = name;
         this.password = password;
-        this.adminRole = adminRole;
+        this.role = "ROLE_" + role;
     }
 
     public long getId() {
@@ -48,11 +48,11 @@ public class Account {
         this.password = password;
     }
 
-    public Boolean getAdminRole() {
-        return adminRole;
+    public String getRole() {
+        return role;
     }
 
-    public void setAdminRole(Boolean adminRole) {
-        this.adminRole = adminRole;
+    public void setRole(String role) {
+        this.role = role;
     }
 }

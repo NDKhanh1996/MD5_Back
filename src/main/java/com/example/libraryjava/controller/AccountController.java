@@ -35,9 +35,9 @@ public class AccountController {
     public ResponseEntity<Object> addAccount(@RequestBody Map<String, String> requestData) { // need try
         String email = requestData.get("email");
         String password = requestData.get("password");
-        Boolean adminRole = false;
+        String role = "USER";
 
-        Account account = new Account(email, password, adminRole);
+        Account account = new Account(email, password, role);
         accountService.addAccount(account);
         Object responseObject = new Object() {
             public final String message = "Account created successfully.";
@@ -74,11 +74,29 @@ public class AccountController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials!");
         }
 
+        session.setAttribute("account", account);
+
         Object responseObject = new Object() {
             public final Account result = account;
             public final String message = "OK";
             public final int status = HttpStatus.OK.value();
         };
+        return new ResponseEntity<>(responseObject, HttpStatus.OK);
+    }
+
+    @GetMapping("/info")
+    public ResponseEntity<Object> getAccountInfo(HttpSession session) {
+        Account account = (Account) session.getAttribute("account");
+        if (account == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not logged in!");
+        }
+
+        Object responseObject = new Object() {
+            public final Account accountInfo = account;
+            public final String message = "OK";
+            public final int status = HttpStatus.OK.value();
+        };
+
         return new ResponseEntity<>(responseObject, HttpStatus.OK);
     }
 }
