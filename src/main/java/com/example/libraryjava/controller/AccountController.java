@@ -31,8 +31,13 @@ public class AccountController {
         return new ResponseEntity<>(responseObject, HttpStatus.OK);
     }
 
-    @PostMapping("add")
-    public ResponseEntity<Object> addAccount(@RequestBody Account account) { // need try
+    @PostMapping("signup")
+    public ResponseEntity<Object> addAccount(@RequestBody Map<String, String> requestData) { // need try
+        String email = requestData.get("email");
+        String password = requestData.get("password");
+        Boolean adminRole = false;
+
+        Account account = new Account(email, password, adminRole);
         accountService.addAccount(account);
         Object responseObject = new Object() {
             public final String message = "Account created successfully.";
