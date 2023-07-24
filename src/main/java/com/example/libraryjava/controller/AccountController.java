@@ -14,6 +14,7 @@ import java.util.Map;
 @RequestMapping("/account")
 @CrossOrigin
 public class AccountController {
+    private HttpSession globalSession;
     private final AccountService accountService;
 
     public AccountController(AccountService accountService) {
@@ -75,6 +76,7 @@ public class AccountController {
         }
 
         session.setAttribute("account", account);
+        globalSession = session;
 
         Object responseObject = new Object() {
             public final Account result = account;
@@ -84,9 +86,19 @@ public class AccountController {
         return new ResponseEntity<>(responseObject, HttpStatus.OK);
     }
 
+    @GetMapping("/logout")
+    public ResponseEntity<Object> logout(){
+        globalSession = null;
+        Object responseObject = new Object() {
+            public final String message = "Logout complete";
+            public final int status = HttpStatus.OK.value();
+        };
+        return new ResponseEntity<>(responseObject, HttpStatus.OK);
+    }
+
     @GetMapping("/info")
     public ResponseEntity<Object> getAccountInfo(HttpSession session) {
-        Account account = (Account) session.getAttribute("account");
+        Account account = (Account) globalSession.getAttribute("account");
         if (account == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not logged in!");
         }
