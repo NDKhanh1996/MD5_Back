@@ -2,11 +2,13 @@ package com.example.libraryjava.controller;
 
 import com.example.libraryjava.model.Account;
 import com.example.libraryjava.service.AccountService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -87,13 +89,9 @@ public class AccountController {
     }
 
     @GetMapping("/logout")
-    public ResponseEntity<Object> logout(){
+    public void logout(HttpServletResponse response) throws IOException {
         globalSession = null;
-        Object responseObject = new Object() {
-            public final String message = "Logout complete";
-            public final int status = HttpStatus.OK.value();
-        };
-        return new ResponseEntity<>(responseObject, HttpStatus.OK);
+        response.sendRedirect("http://localhost:3000/");
     }
 
     @GetMapping("/info")
